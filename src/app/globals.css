@@ -3,19 +3,107 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background-color: #777;
+  --accent-color: #ff8356;
+  --fone-color: #fef9f9;
+  --background-modal:  #9a9b96;
+
+  --yellow: #ffc107;
+  --white: #ffffff;
+  --white-bg: #fdf7f2;
+
+  --black: #111111;
+  --medium-blue: #76bcf9;
+  --blue: #54adff;
+  --light-blue: #9acbf8;
+  --green: #159638;
+  --dark-green: #14532d;
+  --red: #b10b26;
+  --grey: #888888;
+
+  /* Your default theme */
+  --background: #eee;
+  --foreground: #333;
+  --text:#222;
+
+  --auth-bg:#034739;
+  --website-bg:#242c63;
+
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+
+:root.light {
+  --background-color: #9a9b96;
+  --background-link: transparent;
+  --background-modal:  #9a9b96;
+  --text-color: #1C1E21;
+  --card-color: #fff;
+  
+  --main-text:  #001129;
+  --link-span:  #ffc107;
+}
+
+:root.dark {
+  --background-color: #041020;
+  --background-link: #ff75;
+  --background-modal:  #042043;
+  --text-color: #f5f6f7cc;
+  --card-color: #9994;
+
+  --main-text:  #001129;
+  --link-span:  #54adff;
+
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--background-color);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: all 1s ease;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+ul, li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  clip: rect(0 0 0 0);
 }
