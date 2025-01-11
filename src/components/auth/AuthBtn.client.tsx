@@ -14,7 +14,7 @@ export default function AuthButtonClient() {
         await logIn();
       }}
     >
-      {session.data?.user?.name} : Sign Out
+       Sign Out
     </button>
   ) : (
     <button onClick={async () => await logIn()}>Sign In</button>

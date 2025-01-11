@@ -1,6 +1,7 @@
 import React from 'react'
 import { auth } from '../../../auth';
 import { redirect } from 'next/navigation';
+import AuthButton from '@/components/auth/AuthBtn.server';
 
 const DashboardPage = async() => {
   const session = await auth();
@@ -12,8 +13,8 @@ const DashboardPage = async() => {
       <h1>DashboardPage</h1>
       <div>{session?.user?.name}</div>
       <div>{session?.user?.email}</div>
-
-      </div>
+      <AuthButton/>
+    </div>
   )
 }
 

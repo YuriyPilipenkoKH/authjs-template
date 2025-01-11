@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { auth } from "../../auth";
+import AuthButton from "@/components/auth/AuthBtn.server";
 
 
 export default async function Home() {
@@ -9,7 +10,7 @@ export default async function Home() {
   return (
     <nav className="flex gap-4 items-center justify-between p-4" >
       <Link href={'/'}>template </Link>
-      <Link href={'/login'}>login </Link>
+      <AuthButton/>
 
       </nav>
   );
