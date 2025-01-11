@@ -2,6 +2,8 @@ import NextAuth, { User, NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import { prisma } from "./prisma/prisma";
 
 export const BASE_PATH = "/api/auth";
 
@@ -49,6 +51,8 @@ const authOptions: NextAuthConfig = {
       },
     }),
   ],
+  adapter: PrismaAdapter(prisma),
+  session: { strategy: "jwt" },
   basePath: BASE_PATH,
   secret: process.env.NEXTAUTH_SECRET,
 };
