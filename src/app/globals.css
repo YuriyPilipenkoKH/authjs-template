@@ -107,3 +107,8 @@ img {
   border: 0;
   clip: rect(0 0 0 0);
 }
+
+.btn {
+  @apply py-0 px-3 leading-3;
+
+}
