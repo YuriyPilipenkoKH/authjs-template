@@ -8,7 +8,12 @@ const DashboardPage = async() => {
     redirect('/login'); 
   }
   return (
-    <div>DashboardPage</div>
+    <div>
+      <h1>DashboardPage</h1>
+      <div>{session?.user?.name}</div>
+      <div>{session?.user?.email}</div>
+
+      </div>
   )
 }
 
