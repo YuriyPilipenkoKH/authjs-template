@@ -1,6 +1,7 @@
 'use client'
 import React, { useActionState } from 'react'
 import { FcGoogle } from 'react-icons/fc'
+import { GrGithub } from "react-icons/gr";
 import { googleSignIn } from '@/actions/google-signin'
 import { githubSignIn } from '@/actions/github-signin'
 
@@ -22,7 +23,7 @@ const SignInButton = ({provider}:SignInButtonProps) => {
             </p> 
             {(provider === 'google') 
             ? <FcGoogle className='h-5 w-5' />
-            : <FcGoogle className='h-5 w-5' />
+            : <GrGithub className='h-5 w-5' />
             }
       </button>
       <p>{isPending ? "Loading..." : message}</p>

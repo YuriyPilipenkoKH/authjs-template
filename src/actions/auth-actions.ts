@@ -1,10 +1,19 @@
 "use server";
-import { signIn , signOut  } from "../../auth";
+import { signIn ,   } from "../../auth";
+import { signOut } from 'next-auth/react';
 
 export async function logIn() {
   await signIn();
 }
 
-export async function logOut() {
-  await signOut();
-}
+export const logOut = async () => {
+  try {
+    await signOut({ callbackUrl: '/login' }); // Перенаправление после выхода
+      return { 
+        success: true, 
+        message: "Logout successfull.", 
+      }
+  } catch (error) {
+    console.error('Error during logout:', error);
+  }
+};
