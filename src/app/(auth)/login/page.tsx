@@ -1,8 +1,8 @@
 
 import React from 'react'
 import { auth } from '../../../../auth';
-import AuthButton from '@/components/auth/AuthBtn.server';
 import { redirect } from 'next/navigation';
+import SignInButton from '@/components/auth/SignInButton';
 
 const LoginPage = async() => {
     const session = await auth()
@@ -13,7 +13,8 @@ const LoginPage = async() => {
     
   return (
     <div>
-      <AuthButton/>
+      <SignInButton provider='google' />
+      <SignInButton provider='github' />
     </div>
   )
 }
