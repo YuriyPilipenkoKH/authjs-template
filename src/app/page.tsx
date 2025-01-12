@@ -10,7 +10,8 @@ export default async function Home() {
   return (
     <nav className="flex gap-4 items-center justify-between p-4" >
       <Link href={'/'}>template </Link>
-      <AuthButton/>
+      <Link href={'/login'}>login </Link>
+      
 
       </nav>
   );
