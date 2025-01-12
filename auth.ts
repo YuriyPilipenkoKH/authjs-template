@@ -5,6 +5,7 @@ import GithubProvider from "next-auth/providers/github";
 import { prisma } from "./prisma/prisma";
 import { compare } from "bcrypt-ts";
 import { JWT } from "next-auth/jwt";
+import { PrismaAdapter } from "@auth/prisma-adapter";
 
 export const BASE_PATH = "/api/auth";
 
@@ -77,6 +78,10 @@ const authOptions: NextAuthConfig = {
   session: { strategy: "jwt" },
   basePath: BASE_PATH,
   secret: process.env.NEXTAUTH_SECRET,
+  pages: {
+    signIn: "/login", // When the user visits a protected route without being logged in, they will be redirected to /login
+    signOut: "/login", // The page where the user will be redirected after logging out
+  },
   callbacks: {
     async session({ session, token }: { session: Session; token: JWT }) {
       try {

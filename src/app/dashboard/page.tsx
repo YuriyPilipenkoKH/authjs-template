@@ -12,7 +12,7 @@ const DashboardPage = async() => {
     <div>
       <h1>DashboardPage</h1>
       <div>{session?.user?.name}</div>
-      <div>{session?.user?.email}</div>
+      <div>{session?.user?.image}</div>
       <AuthButton/>
     </div>
   )
