@@ -12,7 +12,7 @@ const LoginPage = async() => {
       }
     
   return (
-    <div>
+    <div className='flex flex-col gap-4 items-center justify-center p-5'  >
       <SignInButton provider='google' />
       <SignInButton provider='github' />
     </div>
