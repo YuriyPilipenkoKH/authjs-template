@@ -10,5 +10,7 @@ export type TaskStatus = z.infer<typeof taskStatusSchema>;
 
 export type TaskSummary = Record<TaskStatus, Record<number, { count: number; name: string }>>;
 
+
+
 // Record<K, V>:
 // A TypeScript utility type that creates an object type with keys of type K and values of type V.
