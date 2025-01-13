@@ -1,15 +1,18 @@
 'use client'
-import { logOut } from "@/actions/auth-actions";
-// import toast from "react-hot-toast";
+import { signOut } from "next-auth/react";
+import toast from "react-hot-toast";
+
 
 export const LogoutButton = () => {
 
   const handleLogout = async () => {
-     await logOut();
-    // if (result?.success) {
-      // toast.success("Logout successfull.");
-      // router.push('/login')
-  // };
+    try {
+      await signOut({ callbackUrl: "/login" }); // Redirects to the login page after signing out.
+      toast.success("Logout successful.");
+    } catch (error) {
+      console.error("Error during logout:", error);
+      toast.error("Failed to log out. Please try again.");
+    }
 }
   return (
     <button 
