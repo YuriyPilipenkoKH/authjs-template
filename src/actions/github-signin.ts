@@ -3,5 +3,6 @@ import { signIn } from "../../auth";
 
 export const githubSignIn = async () => {
 
-  return await signIn("github");
+  return  await signIn("github");
+  
 }

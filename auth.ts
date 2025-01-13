@@ -7,6 +7,7 @@ import { compare } from "bcrypt-ts";
 import { JWT } from "next-auth/jwt";
 // import { PrismaAdapter } from "@auth/prisma-adapter";
 
+
 export const BASE_PATH = "/api/auth";
 
 const authOptions: NextAuthConfig = {
