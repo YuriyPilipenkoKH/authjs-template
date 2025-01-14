@@ -126,10 +126,10 @@ const authOptions: NextAuthConfig = {
       if (account?.provider === "google") {
       //   try {
 
-      //     if (!user.email) {
-      //       console.error("Missing email in user data");
-      //       return false;
-      //     }
+          if (!user.email) {
+            console.error("Missing email in user data");
+            return false;
+          }
 
       //     // Check if the user already exists in the database
       //     const existingUser = await prisma.user.findUnique({
