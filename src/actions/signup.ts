@@ -1,7 +1,7 @@
 'use server'
 
 import { RegInputErrorType, RegisterSchema } from "@/models/schemas"
-
+import {hashSync} from 'bcrypt-ts'
 export interface SignupState {
   errors?: RegInputErrorType; // Validation errors, optional
 }
@@ -22,12 +22,12 @@ export async function signup(
       errors: validationResult.error.flatten().fieldErrors,
     }
   }
-
+  const hashedPassword =  hashSync(validationResult.data.password)
   const newUser = {
     name: validationResult.data.name,
     email: validationResult.data.email,
-    password: validationResult.data.password, // Hash this before storing in production
+    password: hashedPassword, // Hash this before storing in production
   };
-  
+
   return { success: true, newUser };
 }
