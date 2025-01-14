@@ -18,7 +18,9 @@ const SignUpForm = () => {
       {state?.errors?.email && <p>{state.errors.email}</p>}
       <input name='password' placeholder='pass' className='input input-primary w-full'/>
       {state?.errors?.password && <p>{state.errors.password}</p>}
-      <button className='btn btn-primary bg-green-900 w-full'>
+      <button 
+      className='btn btn-primary bg-green-900 w-full'
+      disabled={pending}>
         {pending ? 'sending' : 'signup'}
       </button>
     </form>
