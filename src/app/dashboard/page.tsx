@@ -10,7 +10,7 @@ const DashboardPage = async() => {
     redirect('/login'); 
   }
   return (
-    <div>
+    <div className='flex flex-col gap-2 items-center justify-center'>
       <h1>DashboardPage</h1>
       <div>{session?.user?.name}</div>
       <div>{session?.user?.role}</div>

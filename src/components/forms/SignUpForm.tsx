@@ -86,8 +86,6 @@ const SignUpForm = () => {
     }
   };
 
-  // const [ state,formAction] = useActionState(signup, null)
-
   return (
     <form onSubmit={handleSubmit(onSubmit) } 
     autoComplete="off"
