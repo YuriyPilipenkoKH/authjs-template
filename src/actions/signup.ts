@@ -42,7 +42,6 @@ export async function signup(
         name: validationResult.data.name,
         email: validationResult.data.email,
         password: hashedPassword, 
-        // role: "user", 
       },
     });
  

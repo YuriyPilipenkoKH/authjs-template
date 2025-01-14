@@ -1,18 +1,18 @@
 "use client"
 import { signup } from '@/actions/signup'
-import { RegInput, RegisterClientSchema, RegisterClientSchemaType, RegisterSchema } from '@/models/schemas'
-import React, { useActionState } from 'react'
+import {  RegisterClientSchema, RegisterClientSchemaType } from '@/models/schemas'
+import React from 'react'
 import toast from 'react-hot-toast'
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ImSpinner9 } from "react-icons/im";
-import { useFormState } from 'react-dom'
 import { signIn } from 'next-auth/react'
 import capitalize from '@/lib/capitalize'
+import { useRouter } from 'next/navigation'
 
 const SignUpForm = () => {
  
-
+  const router = useRouter()
   const {
     register, 
     handleSubmit,
@@ -66,8 +66,9 @@ const SignUpForm = () => {
 
       if (result?.success && result?.user?.name) {
         toast.success("Registration successful");
-        // await nextAuthSignIn(result?.user?.name)
+        await nextAuthSignIn(result?.user?.name)
         reset()
+        router.push('/dashboard');
       } 
       else if (result?.errors) {
       // Map server errors to react-hook-form errors

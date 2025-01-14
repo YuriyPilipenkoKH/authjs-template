@@ -32,7 +32,7 @@ const authOptions: NextAuthConfig = {
           const password = credentials.password as string | undefined;
       
           if (!email || !password) {
-            throw new Error("Please provide both email and password.");
+            console.error("Please provide both email and password.");
           }
       
           await prisma.$connect();
@@ -50,39 +50,39 @@ const authOptions: NextAuthConfig = {
           });
       
           if (!user || !user.password) {
-            throw new Error("Invalid email or password.");
+            console.error("Invalid email or password.");
           }
       
           // Verify the password
-          const isMatched = await compare(password, user.password);
+          const isMatched = await compare(password, user?.password);
       
           if (!isMatched) {
-            throw new Error("Password did not match.");
+            console.error("Password did not match.");
           }
       
           // Return the user object
           return {
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            role: user.role,
+            id: user?.id,
+            name: user?.name,
+            email: user?.email,
+            role: user?.role,
           };
         } catch (error) {
           console.error("Error in authorize function:", error);
-          throw new Error("Authorization failed. Please check your credentials.");
+         
         }
       },
       
     }),
   ],
   // adapter: PrismaAdapter(prisma),
-  session: { strategy: "jwt" },
-  basePath: BASE_PATH,
-  secret: process.env.NEXTAUTH_SECRET,
-  // pages: {
-  //   signIn: "/login", // When the user visits a protected route without being logged in, they will be redirected to /login
-  //   signOut: "/login", // The page where the user will be redirected after logging out
-  // },
+  // session: { strategy: "jwt" },
+  // basePath: BASE_PATH,
+ 
+  pages: {
+    signIn: "/login", // When the user visits a protected route without being logged in, they will be redirected to /login
+    signOut: "/login", // The page where the user will be redirected after logging out
+  },
   callbacks: {
     async session({ session, token }: { session: Session; token: JWT }) {
       try {
@@ -156,7 +156,7 @@ const authOptions: NextAuthConfig = {
       return true;
     },
   },
-
+  secret: process.env.NEXTAUTH_SECRET,
 };
 export const { handlers, auth, signIn, signOut } = NextAuth(authOptions);
 
