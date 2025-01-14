@@ -1,8 +1,15 @@
 import React from 'react'
+// interface SignUpForm Props {
+
+// }
 
 const SignUpForm = () => {
   return (
-    <div>SignUpForm</div>
+    <form action={()=>{}}>
+      <input name='name' />
+      <input name='email' />
+      <input name='password' />
+    </form>
   )
 }
 
