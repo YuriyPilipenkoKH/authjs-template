@@ -42,7 +42,7 @@ export const RegisterSchema = z.object({
 export const RegisterClientSchema = z.object({
   name: z.string().trim(),
   email: z.string().trim(),
-  password: z.string().trim(),
+  password: z.string().trim().min(6, "Minimum 6 characters for password"),
 
 })
 

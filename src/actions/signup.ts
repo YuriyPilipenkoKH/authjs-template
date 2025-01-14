@@ -2,6 +2,8 @@
 
 import { RegInputErrorType, RegisterSchema } from "@/models/schemas"
 import {hashSync} from 'bcrypt-ts'
+import { prisma } from "../../prisma/prisma";
+import { revalidatePath } from "next/cache";
 export interface SignupState {
   errors?: RegInputErrorType; // Validation errors, optional
 }
@@ -22,12 +24,39 @@ export async function signup(
       errors: validationResult.error.flatten().fieldErrors,
     }
   }
-  const hashedPassword =  hashSync(validationResult.data.password)
-  const newUser = {
-    name: validationResult.data.name,
-    email: validationResult.data.email,
-    password: hashedPassword, // Hash this before storing in production
-  };
 
-  return { success: true, newUser };
+  try {
+    await prisma.$connect()
+     // Check if a user already exists with the same email
+     const existingUser = await prisma.user.findUnique({
+      where: { email: validationResult.data.email  },
+    });
+  
+    if (existingUser) {
+      return { success: false, error: "Email is already registered." };
+    }
+    
+    const hashedPassword =  hashSync(validationResult.data.password)
+    const newUser = await prisma.user.create({
+      data: {
+        name: validationResult.data.name,
+        email: validationResult.data.email,
+        password: hashedPassword, 
+        // role: "user", 
+      },
+    });
+ 
+    // Exclude sensitive fields
+    const { password: _, ...plainUser } = newUser;
+    revalidatePath('/dashboard');
+    return { 
+      success: true, 
+      message: "User registered and logged in successfully.", 
+      user: plainUser
+    };
+  } catch (error) {
+    console.error('Error occurred while registering:', error);
+    const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred";
+    return { success: false, error: errorMessage }
+  }
 }

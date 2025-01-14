@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ImSpinner9 } from "react-icons/im";
 import { useFormState } from 'react-dom'
+import { signIn } from 'next-auth/react'
 
 const SignUpForm = () => {
  
@@ -33,6 +34,25 @@ const SignUpForm = () => {
     isSubmitting,
   } = formState
 
+  // const nextAuthSignIn = async (userName: string) => {
+  //   // Use `signIn` client-side to complete authentication
+  //   const signInResponse = await signIn("credentials", {
+  //    redirect: false,
+  //    email: data.email,
+  //    password: data.password,
+  //  });
+  //  if (signInResponse?.error) {
+  //    console.error("SignIn error:", signInResponse.error);
+  //    return;
+  //  }
+  //  if (signInResponse?.ok){
+  //    toast.success( (formName === 'loginForm')
+  //     ?  `${capitalize(userName)}, you are logged in! `         
+  //     :  `${capitalize(userName)}, your registration was successful! `       
+  //    );
+  //  } 
+  //  }
+
   const onSubmit= async (data:RegisterClientSchemaType) => {
     try {
       const formData = new FormData();
@@ -42,8 +62,9 @@ const SignUpForm = () => {
 
       const result = await signup(formData);
 
-      if (result?.success) {
+      if (result?.success && result?.user?.name) {
         toast.success("Registration successful");
+        // await nextAuthSignIn(result?.user?.name)
         reset()
       } 
       else if (result?.errors) {
