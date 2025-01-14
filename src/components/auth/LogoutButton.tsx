@@ -1,10 +1,12 @@
 'use client'
 import { cn } from "@/lib/cn";
 import { signOut } from "next-auth/react";
+import { useFormStatus } from "react-dom";
 import toast from "react-hot-toast";
 
 
 export const LogoutButton = () => {
+ const {pending,} = useFormStatus()
  
   const handleLogout = async () => {
     try {
@@ -17,11 +19,14 @@ export const LogoutButton = () => {
 }
   return (
    
-      <button
-        className={cn("btn btn-info logout-btn",)}
-        onClick={handleLogout}  >
-          LogOut
-      </button>
+      <form action={handleLogout} >
+        <button
+          className={cn("btn btn-info logout-btn ", )}
+          // onClick={handleLogout}  
+          >
+            {pending ? 'process' : 'LogOut'}
+        </button>
+      </form>
 
   );
 };
