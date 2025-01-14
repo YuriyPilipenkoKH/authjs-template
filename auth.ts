@@ -124,34 +124,28 @@ const authOptions: NextAuthConfig = {
       account: Account | null;
     }){
       if (account?.provider === "google") {
-        try {
-          const allowedEmails = process.env.ALLOWED_EMAILS?.split(",") || [];
+      //   try {
 
-          if (!user.email) {
-            console.error("Missing email in user data");
-            return false;
-          }
+      //     if (!user.email) {
+      //       console.error("Missing email in user data");
+      //       return false;
+      //     }
 
-          // Check if the email is allowed
-          if (allowedEmails.length > 0 && !allowedEmails.includes(user.email)) {
-            console.error("Unauthorized email:", user.email);
-            return false;
-          }
+      //     // Check if the user already exists in the database
+      //     const existingUser = await prisma.user.findUnique({
+      //       where: { email: user.email },
+      //     });
 
-          // Check if the user already exists in the database
-          const existingUser = await prisma.user.findUnique({
-            where: { email: user.email },
-          });
+      //     if (!existingUser) {
+      //       console.error("user not found");
+      //       return false;
 
-          if (!existingUser) {
-            console.error("user not found");
-            return false;
-
-          }
-        } catch (error) {
-          console.error("Error while creating user:", error);
-          return false;
-        }
+      //     }
+      //   } catch (error) {
+      //     console.error("Error while creating user:", error);
+      //     return false;
+      //   }
+      return true;
       }
       return true;
     },
