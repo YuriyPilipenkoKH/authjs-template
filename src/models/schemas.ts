@@ -39,6 +39,13 @@ export const RegisterSchema = z.object({
         }),      
 })
 
+export const RegisterClientSchema = z.object({
+  name: z.string().trim(),
+  email: z.string().trim(),
+  password: z.string().trim(),
+
+})
+
 
 export const LoginSchema = z.object({
 
@@ -65,6 +72,10 @@ export const LoginSchema = z.object({
 
    export type RegInput = z.infer <typeof RegisterSchema >
    export type LogInput = z.infer <typeof LoginSchema >
+
+   export type RegisterClientSchemaType = z.infer <typeof RegisterClientSchema >
+
+
 
   //  export type RegInputErrorType = z.inferFlattenedErrors<typeof RegisterSchema>
    export type RegInputErrorType =  Record<string, string[]>;
