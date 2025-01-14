@@ -32,7 +32,7 @@ const authOptions: NextAuthConfig = {
           const password = credentials.password as string | undefined;
       
           if (!email || !password) {
-            console.error("Please provide both email and password.");
+            throw new Error("Please provide both email and password.");
           }
       
           await prisma.$connect();
@@ -50,14 +50,14 @@ const authOptions: NextAuthConfig = {
           });
       
           if (!user || !user.password) {
-            console.error("Invalid email or password.");
+            throw new Error("Invalid email or password.");
           }
       
           // Verify the password
           const isMatched = await compare(password, user?.password);
       
           if (!isMatched) {
-            console.error("Password did not match.");
+            throw new Error("Password did not match.");
           }
       
           // Return the user object
@@ -69,7 +69,7 @@ const authOptions: NextAuthConfig = {
           };
         } catch (error) {
           console.error("Error in authorize function:", error);
-         
+          return null;
         }
       },
       
