@@ -35,31 +35,32 @@ const SignUpForm = () => {
     isSubmitting,
   } = formState
 
-  const nextAuthSignIn = async (userName: string) => {
-    // Use `signIn` client-side to complete authentication
-    const signInResponse = await signIn("credentials", {
-     redirect: false,
-     email: data.email,
-     password: data.password,
-   });
-   if (signInResponse?.error) {
-     console.error("SignIn error:", signInResponse.error);
-     return;
-   }
-   if (signInResponse?.ok){
-     toast.success( (formName === 'loginForm')
-      ?  `${capitalize(userName)}, you are logged in! `         
-      :  `${capitalize(userName)}, your registration was successful! `       
-     );
-   } 
-   }
+
 
   const onSubmit= async (data:RegisterClientSchemaType) => {
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("email", data.email);
+    formData.append("password", data.password);
+
+    const nextAuthSignIn = async (userName: string) => {
+      // Use `signIn` client-side to complete authentication
+      const signInResponse = await signIn("credentials", {
+       redirect: false,
+       email: data.email,
+       password: data.password,
+     });
+     if (signInResponse?.error) {
+       console.error("SignIn error:", signInResponse.error);
+       return;
+     }
+     if (signInResponse?.ok){
+       toast.success( 
+         `${capitalize(userName)}, your registration was successful! `  
+        );
+     } 
+     }
     try {
-      const formData = new FormData();
-      formData.append("name", data.name);
-      formData.append("email", data.email);
-      formData.append("password", data.password);
 
       const result = await signup(formData);
 
