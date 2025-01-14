@@ -1,26 +1,29 @@
 "use client"
 import { signup } from '@/actions/signup'
-import { RegInput, RegisterSchema } from '@/models/schemas'
+import { RegInput, RegisterClientSchema, RegisterClientSchemaType, RegisterSchema } from '@/models/schemas'
 import React, { useActionState } from 'react'
 import toast from 'react-hot-toast'
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ImSpinner9 } from "react-icons/im";
+import { useFormState } from 'react-dom'
 
 const SignUpForm = () => {
+ 
+
   const {
     register, 
     handleSubmit,
     formState,
     reset,
-  } = useForm<RegInput>({
+  } = useForm<RegisterClientSchemaType>({
     defaultValues: {
       name: '',
       email: '',
       password: '',
     },
       mode:'all',
-      resolver: zodResolver(RegisterSchema),
+      resolver: zodResolver(RegisterClientSchema),
   })
   const {
     errors,
@@ -29,7 +32,7 @@ const SignUpForm = () => {
     isSubmitting,
   } = formState
 
-  const onSubmit= async (data:RegInput) => {
+  const onSubmit= async (data:RegisterClientSchemaType) => {
     try {
       const formData = new FormData();
       formData.append("name", data.name);
@@ -51,6 +54,8 @@ const SignUpForm = () => {
     }
   };
 
+  // const [ state,formAction] = useActionState(signup, null)
+
   return (
     <form onSubmit={handleSubmit(onSubmit) } 
     autoComplete="off"
@@ -62,7 +67,7 @@ const SignUpForm = () => {
           placeholder="Name"
           className="input input-primary w-full"
         />
-        {errors.name && <p className="text-purple-900">{errors.name.message}</p>}
+        {/* {errors.name && <p className="text-purple-900">{errors.name.message}</p>} */}
       </label>
 
       <label  className='w-full'>
@@ -71,7 +76,7 @@ const SignUpForm = () => {
           placeholder="Email"
           className="input input-primary w-full"
         />
-        {errors.email && <p className="text-purple-900">{errors.email.message}</p>}
+        {/* {errors.email && <p className="text-purple-900">{errors.email.message}</p>} */}
       </label>
 
       <label className='w-full'>
@@ -81,13 +86,14 @@ const SignUpForm = () => {
           placeholder="Password"
           className="input input-primary w-full"
         />
-        {errors.password && <p className="text-purple-900">{errors.password.message}</p>}
+        {/* {errors.password && <p className="text-purple-900">{errors.password.message}</p>} */}
       </label>
 
       <button
         type="submit"
         className="btn btn-primary bg-green-900 w-full"
         disabled={isSubmitting || !isValid || !isDirty}
+
       >
         {isSubmitting ? <ImSpinner9 className='animate-spin'/> : null}
         {isSubmitting ? "Sending..." : "Sign Up"}
