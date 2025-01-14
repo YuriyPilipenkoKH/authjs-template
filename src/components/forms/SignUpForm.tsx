@@ -5,7 +5,7 @@ import React, { useActionState } from 'react'
 import toast from 'react-hot-toast'
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-
+import { ImSpinner9 } from "react-icons/im";
 
 const SignUpForm = () => {
   const {
@@ -89,6 +89,7 @@ const SignUpForm = () => {
         className="btn btn-primary bg-green-900 w-full"
         disabled={isSubmitting || !isValid || !isDirty}
       >
+        {isSubmitting ? <ImSpinner9 className='animate-spin'/> : null}
         {isSubmitting ? "Sending..." : "Sign Up"}
       </button>
     </form>
