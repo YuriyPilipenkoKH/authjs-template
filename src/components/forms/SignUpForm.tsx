@@ -38,9 +38,10 @@ const SignUpForm = () => {
 
       const result = await signup(formData);
 
-      if (result) {
+      if (result?.success) {
         toast.success("Registration successful");
-      } else if (!result) {
+      } 
+      else if (!result?.success) {
         toast.error("Validation errors occurred");
       }
     } catch (error) {
@@ -52,27 +53,33 @@ const SignUpForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} 
     className='flex flex-col gap-4 items-center justify-center w-[400px]'>
-      <input
-        {...register("name")}
-        placeholder="Name"
-        className="input input-primary w-full"
-      />
-      {errors.name && <p className="text-red-500">{errors.name.message}</p>}
+      <label  className='w-full'>
+        <input
+          {...register("name")}
+          placeholder="Name"
+          className="input input-primary w-full"
+        />
+        {errors.name && <p className="text-purple-900">{errors.name.message}</p>}
+      </label>
 
-      <input
-        {...register("email")}
-        placeholder="Email"
-        className="input input-primary w-full"
-      />
-      {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+      <label  className='w-full'>
+        <input
+          {...register("email")}
+          placeholder="Email"
+          className="input input-primary w-full"
+        />
+        {errors.email && <p className="text-purple-900">{errors.email.message}</p>}
+      </label>
 
-      <input
-        {...register("password")}
-        // type="password"
-        placeholder="Password"
-        className="input input-primary w-full"
-      />
-      {errors.password && <p className="text-red-500">{errors.password.message}</p>}
+      <label className='w-full'>
+        <input
+          {...register("password")}
+          // type="password"
+          placeholder="Password"
+          className="input input-primary w-full"
+        />
+        {errors.password && <p className="text-purple-900">{errors.password.message}</p>}
+      </label>
 
       <button
         type="submit"

@@ -18,7 +18,14 @@ export async function signup(
   })
   if(!validationResult.success) {
     return {
-      errors: validationResult.error.flatten().fieldErrors
+      success: false,
+      errors: validationResult.error.flatten().fieldErrors,
     }
   }
+
+  const newUser = {
+    ...validationResult
+  }
+
+  return { success: true, newUser };
 }
