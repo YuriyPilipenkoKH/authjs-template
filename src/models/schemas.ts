@@ -66,5 +66,6 @@ export const LoginSchema = z.object({
    export type RegInput = z.infer <typeof RegisterSchema >
    export type LogInput = z.infer <typeof LoginSchema >
 
-   export type RegInputErrorType = z.inferFlattenedErrors<typeof RegisterSchema>
+  //  export type RegInputErrorType = z.inferFlattenedErrors<typeof RegisterSchema>
+   export type RegInputErrorType =  Record<string, string[]>;
    export type LogInputtErrorType = z.inferFlattenedErrors<typeof LoginSchema>

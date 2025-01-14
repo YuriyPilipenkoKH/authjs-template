@@ -1,27 +1,85 @@
 "use client"
 import { signup } from '@/actions/signup'
+import { RegInput, RegisterSchema } from '@/models/schemas'
 import React, { useActionState } from 'react'
-// interface SignUpForm Props {
-
-// }
+import toast from 'react-hot-toast'
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 
 const SignUpForm = () => {
-  const [ state, action , pending] = useActionState(signup,undefined)
+  const {
+    register, 
+    handleSubmit,
+    formState,
+    reset,
+  } = useForm<RegInput>({
+    defaultValues: {
+      name: '',
+      email: '',
+      password: '',
+    },
+      mode:'all',
+      resolver: zodResolver(RegisterSchema),
+  })
+  const {
+    errors,
+    isDirty,
+    isValid ,
+    isSubmitting,
+  } = formState
+
+  const onSubmit= async (data:RegInput) => {
+    try {
+      const formData = new FormData();
+      formData.append("name", data.name);
+      formData.append("email", data.email);
+      formData.append("password", data.password);
+
+      const result = await signup(formData);
+
+      if (result) {
+        toast.success("Registration successful");
+      } else if (!result) {
+        toast.error("Validation errors occurred");
+      }
+    } catch (error) {
+      console.error("Registration failed:", error);
+      toast.error("Registration failed");
+    }
+  };
 
   return (
-    <form action={action}
+    <form onSubmit={handleSubmit(onSubmit)} 
     className='flex flex-col gap-4 items-center justify-center w-[400px]'>
-      <input name='name' placeholder='name' className='input input-primary w-full'/>
-      {state?.errors?.name && <p>{state.errors.name}</p>}
-      <input name='email' placeholder='mail' className='input input-primary w-full'/>
-      {state?.errors?.email && <p>{state.errors.email}</p>}
-      <input name='password' placeholder='pass' className='input input-primary w-full'/>
-      {state?.errors?.password && <p>{state.errors.password}</p>}
-      <button 
-      className='btn btn-primary bg-green-900 w-full'
-      disabled={pending}>
-        {pending ? 'sending' : 'signup'}
+      <input
+        {...register("name")}
+        placeholder="Name"
+        className="input input-primary w-full"
+      />
+      {errors.name && <p className="text-red-500">{errors.name.message}</p>}
+
+      <input
+        {...register("email")}
+        placeholder="Email"
+        className="input input-primary w-full"
+      />
+      {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+
+      <input
+        {...register("password")}
+        // type="password"
+        placeholder="Password"
+        className="input input-primary w-full"
+      />
+      {errors.password && <p className="text-red-500">{errors.password.message}</p>}
+
+      <button
+        type="submit"
+        className="btn btn-primary bg-green-900 w-full"
+        disabled={isSubmitting}
+      >
+        {isSubmitting ? "Sending..." : "Sign Up"}
       </button>
     </form>
   )
