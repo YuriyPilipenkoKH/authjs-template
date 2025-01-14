@@ -24,8 +24,10 @@ export async function signup(
   }
 
   const newUser = {
-    ...validationResult
-  }
-
+    name: validationResult.data.name,
+    email: validationResult.data.email,
+    password: validationResult.data.password, // Hash this before storing in production
+  };
+  
   return { success: true, newUser };
 }

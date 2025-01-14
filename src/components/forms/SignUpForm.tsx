@@ -52,7 +52,9 @@ const SignUpForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} 
+    <form onSubmit={handleSubmit(onSubmit) } 
+    autoComplete="off"
+    noValidate
     className='flex flex-col gap-4 items-center justify-center w-[400px]'>
       <label  className='w-full'>
         <input
@@ -85,7 +87,7 @@ const SignUpForm = () => {
       <button
         type="submit"
         className="btn btn-primary bg-green-900 w-full"
-        disabled={isSubmitting}
+        disabled={isSubmitting || !isValid || !isDirty}
       >
         {isSubmitting ? "Sending..." : "Sign Up"}
       </button>
