@@ -16,6 +16,7 @@ const SignUpForm = () => {
     handleSubmit,
     formState,
     reset,
+    setError, // Use this to manually set server-side errors
   } = useForm<RegisterClientSchemaType>({
     defaultValues: {
       name: '',
@@ -45,8 +46,15 @@ const SignUpForm = () => {
         toast.success("Registration successful");
         reset()
       } 
-      else if (!result?.success) {
-        toast.error("Validation errors occurred");
+      else if (result?.errors) {
+      // Map server errors to react-hook-form errors
+      for (const [field, messages] of Object.entries(result.errors)) {
+        setError(field as keyof RegisterClientSchemaType, {
+          type: "server",
+          message: messages[0], // Use the first error message for simplicity
+        });
+      }
+        
       }
     } catch (error) {
       console.error("Registration failed:", error);
@@ -67,7 +75,7 @@ const SignUpForm = () => {
           placeholder="Name"
           className="input input-primary w-full"
         />
-        {/* {errors.name && <p className="text-purple-900">{errors.name.message}</p>} */}
+        {errors.name && <p className="text-purple-900">{errors.name.message}</p>}
       </label>
 
       <label  className='w-full'>
@@ -76,7 +84,7 @@ const SignUpForm = () => {
           placeholder="Email"
           className="input input-primary w-full"
         />
-        {/* {errors.email && <p className="text-purple-900">{errors.email.message}</p>} */}
+        {errors.email && <p className="text-purple-900">{errors.email.message}</p>}
       </label>
 
       <label className='w-full'>
@@ -86,7 +94,7 @@ const SignUpForm = () => {
           placeholder="Password"
           className="input input-primary w-full"
         />
-        {/* {errors.password && <p className="text-purple-900">{errors.password.message}</p>} */}
+        {errors.password && <p className="text-purple-900">{errors.password.message}</p>}
       </label>
 
       <button
