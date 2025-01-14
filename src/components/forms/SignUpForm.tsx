@@ -40,6 +40,7 @@ const SignUpForm = () => {
 
       if (result?.success) {
         toast.success("Registration successful");
+        reset()
       } 
       else if (!result?.success) {
         toast.error("Validation errors occurred");
