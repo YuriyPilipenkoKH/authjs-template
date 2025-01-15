@@ -15,13 +15,11 @@ const SignInForm = () => {
           className="input input-primary w-full"
         />
       </label>
-            <button
-              type="submit"
-              className="btn btn-primary bg-green-900 w-full"
-       
-            >
-              Log In
-            </button>
+        <button
+          type="submit"
+          className="btn btn-primary bg-green-900 w-full" >
+          Log In
+        </button>
     </form>
   )
 }
