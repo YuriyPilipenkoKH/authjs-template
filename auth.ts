@@ -86,6 +86,7 @@ const authOptions: NextAuthConfig = {
               email: user.email!,
               name: user.name || null,
               image: user.image || null,
+              role: "user", // Set the default role to user
             },
           });
         }
@@ -133,6 +134,7 @@ const authOptions: NextAuthConfig = {
       // Optionally include additional user data in the session
       if (session.user) {
         session.user.id = token.id as string;
+        session.user.role = token.role as string; // Add the role from the token
       }
       return session;
     },
@@ -140,6 +142,7 @@ const authOptions: NextAuthConfig = {
       // Add user ID to the JWT token
       if (user) {
         token.id = user.id;
+        token.role = user.role; // Add the role to the token
       }
       return token;
     },

@@ -7,7 +7,7 @@ const AnminPage =  async() => {
     const session = await auth();
     const userId = session?.user?.id
     // const userRole = session?.user?.role
-    console.log('userId',userId);
+    console.log(session);
     
     if (!session) {
       redirect('/login'); 
