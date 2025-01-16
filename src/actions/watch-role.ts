@@ -1,3 +1,4 @@
+"use server";
 import { prisma } from "../../prisma/prisma";
 
 
@@ -6,5 +7,5 @@ const user = await prisma.user.findUnique({
   where: { email: "yurik2061@gmail.com" },
   select: { role: true },
 });
-console.log(user);
+console.log('user', user);
 }

@@ -2,6 +2,7 @@ import React from 'react'
 import { auth } from '../../../auth';
 import { redirect } from 'next/navigation';
 import { LogoutButton } from '@/components/auth/LogoutButton';
+import RoleButton from '@/components/auth/RoleButton';
 
 
 const DashboardPage = async() => {
@@ -17,6 +18,8 @@ const DashboardPage = async() => {
       <div>{session?.user?.image}</div>
      
       <LogoutButton/>
+      <RoleButton/>
+
     </div>
   )
 }
