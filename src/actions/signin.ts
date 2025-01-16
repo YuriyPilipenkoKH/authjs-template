@@ -1,3 +1,4 @@
+'use server'
 import { LoginClientSchema } from "@/models/schemas";
 import { prisma } from "../../prisma/prisma";
 import { compare } from "bcrypt-ts";
