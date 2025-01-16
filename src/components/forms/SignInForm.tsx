@@ -58,12 +58,11 @@ const SignInForm = () => {
        } 
        }
       try {
-  
-        const result = await signin(formData);
+          const result = await signin(formData);
   
         if (result?.success && result?.user?.name) {
-          toast.success("Registration successful");
-          // await nextAuthSignIn(result?.user?.name)
+          await nextAuthSignIn(result?.user?.name)
+          toast.success(result?.message);
           reset()
           // router.push('/dashboard');
         } 
