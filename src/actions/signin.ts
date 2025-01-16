@@ -1,6 +1,7 @@
 import { LoginClientSchema } from "@/models/schemas";
 import { prisma } from "../../prisma/prisma";
 import { compare } from "bcrypt-ts";
+import { revalidatePath } from "next/cache";
 
 export async function signin(formData:FormData) {
   const validationResult = await LoginClientSchema.safeParseAsync({
@@ -31,7 +32,12 @@ export async function signin(formData:FormData) {
     }
     // Exclude sensitive fields
     const { password: _, ...plainUser } = existingUser;
-
+    revalidatePath('/dashboard');
+    return { 
+      success: true, 
+      message: `${plainUser.name} logged in successfully.`, 
+      user: plainUser
+    };
   } catch (error) {
     
   }

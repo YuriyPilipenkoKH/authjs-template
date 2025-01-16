@@ -50,7 +50,7 @@ export async function signup(
     revalidatePath('/dashboard');
     return { 
       success: true, 
-      message: "User registered and logged in successfully.", 
+      message: `${newUser.name}  registered and logged in successfully.`, 
       user: plainUser
     };
   } catch (error) {
