@@ -30,7 +30,7 @@ export async function signin(formData:FormData) {
       return { success: false, error: "Password did not match." };
     }
     // Exclude sensitive fields
-    
+    const { password: _, ...plainUser } = existingUser;
 
   } catch (error) {
     
