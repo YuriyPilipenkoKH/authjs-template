@@ -4,15 +4,14 @@ import { signIn } from 'next-auth/react'
 import capitalize from '@/lib/capitalize'
 import { LoginClientSchema, LoginClientSchemaType } from '@/models/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useRouter } from 'next/navigation'
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { ImSpinner9 } from 'react-icons/im'
 
 
 const SignInForm = () => {
-    const router = useRouter()
+    const [logError, setLogError] = useState<string | null>(null)
     const {
       register, 
       handleSubmit,
@@ -66,7 +65,7 @@ const SignInForm = () => {
           // toast.success(result?.message);
           reset()
         } 
-        else if (result?.errors) {
+         if (result?.errors) {
         // Map server errors to react-hook-form errors
         for (const [field, messages] of Object.entries(result.errors)) {
           setError(field as keyof LoginClientSchemaType, {
@@ -74,6 +73,9 @@ const SignInForm = () => {
             message: messages[0], // Use the first error message for simplicity
           });
         }
+        }
+        if (result?.error) {
+          setLogError(result.error)
         }
       } catch (error) {
         console.error("Registration failed:", error);
@@ -102,6 +104,7 @@ const SignInForm = () => {
           className="input input-primary w-full"
         />
         {errors.password && <p className="text-purple-900">{errors.password.message}</p>}
+        {logError && <p className="text-purple-900">{logError}</p>}
       </label>
       <button
         type="submit"

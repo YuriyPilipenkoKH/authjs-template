@@ -8,11 +8,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { ImSpinner9 } from "react-icons/im";
 import { signIn } from 'next-auth/react'
 import capitalize from '@/lib/capitalize'
-import { useRouter } from 'next/navigation'
+
 
 const SignUpForm = () => {
  
-  const router = useRouter()
   const {
     register, 
     handleSubmit,
@@ -34,8 +33,6 @@ const SignUpForm = () => {
     isValid ,
     isSubmitting,
   } = formState
-
-
 
   const onSubmit= async (data:RegisterClientSchemaType) => {
     const formData = new FormData();
