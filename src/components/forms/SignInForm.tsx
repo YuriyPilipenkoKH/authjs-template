@@ -1,5 +1,6 @@
 "use client"
 import { signin } from '@/actions/signin'
+import { signIn } from 'next-auth/react'
 import capitalize from '@/lib/capitalize'
 import { LoginClientSchema, LoginClientSchemaType } from '@/models/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -7,7 +8,7 @@ import { useRouter } from 'next/navigation'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { string } from 'zod'
+
 
 const SignInForm = () => {
     const router = useRouter()
@@ -38,23 +39,24 @@ const SignInForm = () => {
       formData.append("email", data.email);
       formData.append("password", data.password);
   
-      // const nextAuthSignIn = async (userName: string) => {
-      //   // Use `signIn` client-side to complete authentication
-      //   const signInResponse = await signIn("credentials", {
-      //    redirect: false,
-      //    email: data.email,
-      //    password: data.password,
-      //  });
-      //  if (signInResponse?.error) {
-      //    console.error("SignIn error:", signInResponse.error);
-      //    return;
-      //  }
-      //  if (signInResponse?.ok){
-      //    toast.success( 
-      //      `${capitalize(userName)}, your registration was successful! `  
-      //     );
-      //  } 
-      //  }
+      const nextAuthSignIn = async (userName: string) => {
+        // Use `signIn` client-side to complete authentication
+        const signInResponse = await signIn("credentials", {
+         redirect: false,
+         email: data.email,
+         password: data.password,
+         callbackUrl: "/dashboard",
+       });
+       if (signInResponse?.error) {
+         console.error("SignIn error:", signInResponse.error);
+         return;
+       }
+       if (signInResponse?.ok){
+         toast.success( 
+           `${capitalize(userName)}, your registration was successful! `  
+          );
+       } 
+       }
       try {
   
         const result = await signin(formData);
@@ -63,7 +65,7 @@ const SignInForm = () => {
           toast.success("Registration successful");
           // await nextAuthSignIn(result?.user?.name)
           reset()
-          router.push('/dashboard');
+          // router.push('/dashboard');
         } 
         else if (result?.errors) {
         // Map server errors to react-hook-form errors
