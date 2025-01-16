@@ -1,12 +1,12 @@
 'use server'
-import { LoginClientSchema } from "@/models/schemas";
+
+import {  LoginSchema } from "@/models/schemas";
 import { prisma } from "../../prisma/prisma";
 import { compare } from "bcrypt-ts";
 import { revalidatePath } from "next/cache";
 
 export async function signin(formData:FormData) {
-  const validationResult = await LoginClientSchema.safeParseAsync({
-   
+  const validationResult = await LoginSchema.safeParseAsync({
     email: formData.get('email'),
     password: formData.get('password'),
   })
@@ -16,12 +16,14 @@ export async function signin(formData:FormData) {
       errors: validationResult.error.flatten().fieldErrors,
     }
   }
+  console.log('validationResult',validationResult);
   try {
     await prisma.$connect()
       // Check if a user already exists with the same email
       const existingUser = await prisma.user.findUnique({
       where: { email: validationResult.data.email  },
     });
+    console.log('existingUser',existingUser);
     if (!existingUser?.password) {
       return { success: false, error: "Email is not registered." };
     }

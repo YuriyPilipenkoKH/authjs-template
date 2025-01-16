@@ -46,7 +46,7 @@ const SignInForm = () => {
          redirect: false,
          email: data.email,
          password: data.password,
-         callbackUrl: "/dashboard",
+        //  callbackUrl: "/dashboard",
        });
        if (signInResponse?.error) {
          console.error("SignIn error:", signInResponse.error);
@@ -65,7 +65,7 @@ const SignInForm = () => {
           await nextAuthSignIn(result?.user?.name)
           toast.success(result?.message);
           reset()
-          // router.push('/dashboard');
+          router.push('/dashboard');
         } 
         else if (result?.errors) {
         // Map server errors to react-hook-form errors
