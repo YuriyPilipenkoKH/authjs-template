@@ -6,15 +6,15 @@ import { LogoutButton } from '@/components/auth/LogoutButton';
 const AnminPage =  async() => {
     const session = await auth();
     const userId = session?.user?.id
-    // const userRole = session?.user?.role
+    const userRole = session?.user?.role
     console.log(session);
     
     if (!session) {
       redirect('/login'); 
     }
-    // if (userRole !== 'admin') {
-    //   redirect('/dashboard'); 
-    // }
+    if (userRole !== 'admin') {
+      redirect('/dashboard'); 
+    }
   return (
     <div>AnminPage
       <div>name{' '}{session?.user?.name}</div>

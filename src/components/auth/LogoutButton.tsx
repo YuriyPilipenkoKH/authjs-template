@@ -11,7 +11,7 @@ export const LogoutButton = () => {
   const handleLogout = async () => {
     try {
       await signOut({ callbackUrl: "/login" }); // Redirects to the login page after signing out.
-      toast.success("Logout successful.");
+      toast.success("Logout successful,");
     } catch (error) {
       console.error("Error during logout:", error);
       toast.error("Failed to log out. Please try again.");

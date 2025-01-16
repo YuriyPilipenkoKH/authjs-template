@@ -65,7 +65,6 @@ const SignInForm = () => {
           await nextAuthSignIn(result?.user?.name)
           // toast.success(result?.message);
           reset()
-          // router.push('/dashboard');
         } 
         else if (result?.errors) {
         // Map server errors to react-hook-form errors
