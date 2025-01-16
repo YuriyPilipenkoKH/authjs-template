@@ -6,14 +6,9 @@ import { redirect } from 'next/navigation';
 const AnminPage =  async() => {
     const session = await auth();
     const userRole = session?.user?.role
-    console.log(session);
     
-    if (!session) {
-      redirect('/login'); 
-    }
-    if (userRole !== 'admin') {
-      redirect('/dashboard'); 
-    }
+    if (!session) redirect('/login'); 
+    if (userRole !== 'admin') redirect('/dashboard'); 
   return (
     <div>AnminPage
       <div>name{' '}{session?.user?.name}</div>

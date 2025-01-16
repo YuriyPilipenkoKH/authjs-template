@@ -8,9 +8,7 @@ import RoleButton from '@/components/auth/RoleButton';
 const DashboardPage = async() => {
   const session = await auth();
   console.log(session);
-  if (!session) {
-    redirect('/login'); 
-  }
+    if (!session) redirect('/login'); 
   return (
     <div className='flex flex-col gap-2 items-center justify-center'>
       <h1>DashboardPage</h1>
@@ -18,7 +16,7 @@ const DashboardPage = async() => {
       <div>{session?.user?.role}</div>
       <div>{session?.user?.image}</div>
      
-      <LogoutButton/>
+      <LogoutButton username={session?.user?.name}/>
       <RoleButton/>
 
     </div>
