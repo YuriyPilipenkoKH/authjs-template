@@ -8,10 +8,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { ImSpinner9 } from "react-icons/im";
 import { signIn } from 'next-auth/react'
 import capitalize from '@/lib/capitalize'
+import { useRouter } from 'next/navigation'
 
 
 const SignUpForm = () => {
- 
+ const router = useRouter()
   const {
     register, 
     handleSubmit,
@@ -66,6 +67,7 @@ const SignUpForm = () => {
         toast.success("Registration successful");
         await nextAuthSignIn(result?.user?.name)
         reset()
+        router.push('/dashboard')
       } 
       else if (result?.errors) {
       // Map server errors to react-hook-form errors
