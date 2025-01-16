@@ -8,10 +8,12 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { ImSpinner9 } from 'react-icons/im'
+import { useRouter } from 'next/navigation'
 
 
 const SignInForm = () => {
     const [logError, setLogError] = useState<string | null>(null)
+    const router = useRouter()
     const {
       register, 
       handleSubmit,
@@ -33,6 +35,10 @@ const SignInForm = () => {
       isSubmitting,
     } = formState
 
+    const handleInputChange =   (field: keyof LoginClientSchemaType) => {
+      if(logError) setLogError(null)
+      }
+
     const onSubmit= async (data:LoginClientSchemaType) => {
       const formData = new FormData();
 
@@ -45,7 +51,7 @@ const SignInForm = () => {
          redirect: false,
          email: data.email,
          password: data.password,
-         callbackUrl: "/dashboard",
+    
        });
        if (signInResponse?.error) {
          console.error("SignIn error:", signInResponse.error);
@@ -64,6 +70,7 @@ const SignInForm = () => {
           await nextAuthSignIn(result?.user?.name)
           // toast.success(result?.message);
           reset()
+          router.push('/dashboard')
         } 
          if (result?.errors) {
         // Map server errors to react-hook-form errors
@@ -98,7 +105,7 @@ const SignInForm = () => {
       </label>
       <label  className='w-full'>
       <input
-          {...register("password")}
+          {...register("password",{ onChange: handleInputChange })}
           // type="password"
           placeholder="Password"
           className="input input-primary w-full"

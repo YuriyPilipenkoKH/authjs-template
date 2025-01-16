@@ -77,6 +77,7 @@ import { z } from "zod"
 
    export type RegisterClientSchemaType = z.infer <typeof RegisterClientSchema >
    export type LoginClientSchemaType = z.infer <typeof LoginClientSchema >
+  
 
   //  export type RegInputErrorType = z.inferFlattenedErrors<typeof RegisterSchema>
    export type RegInputErrorType =  Record<string, string[]>;

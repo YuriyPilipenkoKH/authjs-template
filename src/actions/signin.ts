@@ -10,7 +10,6 @@ export async function signin(formData:FormData) {
     email: formData.get('email'),
     password: formData.get('password'),
   })
-  console.log('validationResult',validationResult);
   if(!validationResult.success) {
     return {
       success: false,
