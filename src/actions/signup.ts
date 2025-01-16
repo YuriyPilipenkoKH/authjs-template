@@ -13,7 +13,7 @@ export async function signup(
   formData:FormData
 ) {
 // console.log('state',state);
-  const validationResult = RegisterSchema.safeParse({
+  const validationResult = await RegisterSchema.safeParseAsync({
     name: formData.get('name'),
     email: formData.get('email'),
     password: formData.get('password'),
