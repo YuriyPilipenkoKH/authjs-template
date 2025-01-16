@@ -16,6 +16,7 @@ export const LogoutButton:React.FC<LogoutButtonProps> = ({username} :LogoutButto
     try {
       await signOut({ callbackUrl: "/login" }); // Redirects to the login page after signing out.
       toast.success(`Logout successful, ${capitalize(username)}!`);
+      
     } catch (error) {
       console.error("Error during logout:", error);
       toast.error("Failed to log out. Please try again.");
