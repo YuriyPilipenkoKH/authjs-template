@@ -9,7 +9,7 @@ export const emailAvailable = async (fieldValue: string): Promise<string | undef
       const existingUser = await prisma.user.findFirst({
       where: { email: fieldValue  },
     });
- console.log('existingUser', existingUser);
+
       return existingUser ? 'Email already exists' : undefined;
 
   } catch (error) {

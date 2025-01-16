@@ -7,6 +7,7 @@ import RoleButton from '@/components/auth/RoleButton';
 
 const DashboardPage = async() => {
   const session = await auth();
+  console.log(session);
   if (!session) {
     redirect('/login'); 
   }
