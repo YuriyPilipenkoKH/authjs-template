@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
+import { ImSpinner9 } from 'react-icons/im'
 
 
 const SignInForm = () => {
@@ -74,7 +75,6 @@ const SignInForm = () => {
             message: messages[0], // Use the first error message for simplicity
           });
         }
-          
         }
       } catch (error) {
         console.error("Registration failed:", error);
@@ -82,24 +82,35 @@ const SignInForm = () => {
       }
     };
   return (
-    <form  className='flex flex-col gap-4 items-center justify-center w-[400px]'>
+    <form 
+      onSubmit={handleSubmit(onSubmit) } 
+      autoComplete="off"
+      noValidate
+      className='flex flex-col gap-4 items-center justify-center w-[400px]'>
       <label  className='w-full'>
-        <input
-          placeholder="mail"
+      <input
+          {...register("email")}
+          placeholder="Email"
           className="input input-primary w-full"
         />
+        {errors.email && <p className="text-purple-900">{errors.email.message}</p>}
       </label>
       <label  className='w-full'>
-        <input
-          placeholder="pass"
+      <input
+          {...register("password")}
+          // type="password"
+          placeholder="Password"
           className="input input-primary w-full"
         />
+        {errors.password && <p className="text-purple-900">{errors.password.message}</p>}
       </label>
-        <button
-          type="submit"
-          className="btn btn-primary bg-green-900 w-full" >
-          Log In
-        </button>
+      <button
+        type="submit"
+        className="btn btn-primary bg-green-900 w-full"
+        disabled={isSubmitting || !isValid || !isDirty}  >
+        {isSubmitting ? <ImSpinner9 className='animate-spin'/> : null}
+        {isSubmitting ? "Sending..." : "LogIn"}
+      </button>
     </form>
   )
 }

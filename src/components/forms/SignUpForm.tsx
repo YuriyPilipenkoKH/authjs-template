@@ -122,9 +122,7 @@ const SignUpForm = () => {
       <button
         type="submit"
         className="btn btn-primary bg-green-900 w-full"
-        disabled={isSubmitting || !isValid || !isDirty}
-
-      >
+        disabled={isSubmitting || !isValid || !isDirty} >
         {isSubmitting ? <ImSpinner9 className='animate-spin'/> : null}
         {isSubmitting ? "Sending..." : "Sign Up"}
       </button>
