@@ -10,20 +10,19 @@ export async function signin(formData:FormData) {
     email: formData.get('email'),
     password: formData.get('password'),
   })
+  console.log('validationResult',validationResult);
   if(!validationResult.success) {
     return {
       success: false,
       errors: validationResult.error.flatten().fieldErrors,
     }
   }
-  console.log('validationResult',validationResult);
   try {
     await prisma.$connect()
       // Check if a user already exists with the same email
       const existingUser = await prisma.user.findUnique({
       where: { email: validationResult.data.email  },
     });
-    console.log('existingUser',existingUser);
     if (!existingUser?.password) {
       return { success: false, error: "Email is not registered." };
     }

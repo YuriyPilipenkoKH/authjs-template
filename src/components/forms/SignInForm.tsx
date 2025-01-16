@@ -54,7 +54,7 @@ const SignInForm = () => {
        }
        if (signInResponse?.ok){
          toast.success( 
-           `${capitalize(userName)}, your registration was successful! `  
+           `${capitalize(userName)}, you're successfully logged in! `  
           );
        } 
        }
@@ -63,7 +63,7 @@ const SignInForm = () => {
   
         if (result?.success && result?.user?.name) {
           await nextAuthSignIn(result?.user?.name)
-          toast.success(result?.message);
+          // toast.success(result?.message);
           reset()
           router.push('/dashboard');
         } 
