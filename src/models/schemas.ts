@@ -2,7 +2,7 @@
 import { emailAvailable } from "@/lib/emailAvailable";
 import { z } from "zod"
 
-export const RegisterSchema = z.object({
+  export const RegisterSchema = z.object({
     name: z
         .string()
         .trim()
@@ -38,30 +38,21 @@ export const RegisterSchema = z.object({
         .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d$#&]*$/, { 
             message: "Include capital letters and numbers" 
         }),      
-})
+  })
 
-export const RegisterClientSchema = z.object({
-  name: z.string().trim(),
-  email: z.string().trim(),
-  password: z.string().trim().min(6, "Minimum 6 characters for password"),
-
-})
-
-
-export const LoginSchema = z.object({
-
+  export const LoginSchema = z.object({
     email: z
         .string()
         .email('email is not valid')
         .refine((val) => !val.endsWith('.ru'), {
             message: 'Domain is not supported'
           })
-        // .refine(async (fieldValue) => {
-        //     const result = await emailAvailable(fieldValue);
-        //     return result !== undefined;
-        // }, {
-        //     message: 'Email not found'
-        // })  
+        .refine(async (fieldValue) => {
+            const result = await emailAvailable(fieldValue);
+            return result !== undefined;
+        }, {
+            message: 'Email not found'
+        })  
       ,
     password: z
         .string()
@@ -69,15 +60,24 @@ export const LoginSchema = z.object({
         .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d$#&]*$/, { 
             message: "Don`t forget your password" 
         }),      
-})
+  })
+    export const RegisterClientSchema = z.object({
+      name: z.string().trim(),
+      email: z.string().trim(),
+      password: z.string().trim().min(6, "Minimum 6 characters for password"),
 
+    })
+    export const LoginClientSchema = z.object({
+      email: z.string().trim(),
+      password: z.string().trim().min(6, "Minimum 6 characters for password"),
+
+    })
    export type RegInput = z.infer <typeof RegisterSchema >
    export type LogInput = z.infer <typeof LoginSchema >
 
    export type RegisterClientSchemaType = z.infer <typeof RegisterClientSchema >
-
-
+   export type LoginClientSchemaType = z.infer <typeof LoginClientSchema >
 
   //  export type RegInputErrorType = z.inferFlattenedErrors<typeof RegisterSchema>
    export type RegInputErrorType =  Record<string, string[]>;
-   export type LogInputtErrorType = z.inferFlattenedErrors<typeof LoginSchema>
+   export type LogInputtErrorType = Record<string, string[]>;
