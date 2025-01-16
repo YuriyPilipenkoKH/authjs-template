@@ -1,4 +1,5 @@
 "use client"
+import { signin } from '@/actions/signin'
 import capitalize from '@/lib/capitalize'
 import { LoginClientSchema, LoginClientSchemaType } from '@/models/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -31,9 +32,9 @@ const SignInForm = () => {
       isSubmitting,
     } = formState
 
-    const onSubmit= async (data:RegisterClientSchemaType) => {
+    const onSubmit= async (data:LoginClientSchemaType) => {
       const formData = new FormData();
-      formData.append("name", data.name);
+
       formData.append("email", data.email);
       formData.append("password", data.password);
   
@@ -56,7 +57,7 @@ const SignInForm = () => {
       //  }
       try {
   
-        const result = await signup(formData);
+        const result = await signin(formData);
   
         if (result?.success && result?.user?.name) {
           toast.success("Registration successful");
