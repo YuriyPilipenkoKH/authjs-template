@@ -104,7 +104,14 @@ const authOptions: NextAuthConfig = {
             },
           },
         });
-
+      // Skip account creation if the account object is missing or has no provider info
+      if (!account || !account.provider || !account.providerAccountId) {
+        return true; // Nothing to create; proceed
+      }
+      if(account.provider === 'credentials'){   
+        return true; // Nothing to create; proceed
+        }
+        // Check if the account already exists
         if (!existingAccount) {
           // If the account does not exist, create it
           await prisma.account.create({
