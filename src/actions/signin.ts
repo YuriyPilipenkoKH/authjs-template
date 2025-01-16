@@ -6,4 +6,10 @@ export async function signin(formData:FormData) {
     email: formData.get('email'),
     password: formData.get('password'),
   })
+  if(!validationResult.success) {
+    return {
+      success: false,
+      errors: validationResult.error.flatten().fieldErrors,
+    }
+  }
 }
