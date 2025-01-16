@@ -1,6 +1,34 @@
+"use client"
+import { LoginClientSchema, LoginClientSchemaType } from '@/models/schemas'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
 import React from 'react'
+import { useForm } from 'react-hook-form'
 
 const SignInForm = () => {
+    const router = useRouter()
+    const {
+      register, 
+      handleSubmit,
+      formState,
+      reset,
+      setError, // Use this to manually set server-side errors
+    } = useForm<LoginClientSchemaType>({
+      defaultValues: {
+        email: '',
+        password: '',
+      },
+        mode:'all',
+        resolver: zodResolver(LoginClientSchema),
+    })
+    const {
+      errors,
+      isDirty,
+      isValid ,
+      isSubmitting,
+    } = formState
+
+
   return (
     <form  className='flex flex-col gap-4 items-center justify-center w-[400px]'>
       <label  className='w-full'>
