@@ -12,7 +12,7 @@ interface LogoutButtonProps {
 
 export const LogoutButton:React.FC<LogoutButtonProps> = ({username} :LogoutButtonProps) => {
  const {pending,} = useFormStatus()
- console.log('username', username);
+
   const handleLogout = async () => {
     try {
       await signOut({ callbackUrl: "/login" }); // Redirects to the login page after signing out.
