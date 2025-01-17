@@ -1,4 +1,4 @@
-import NextAuth, { NextAuthConfig } from "next-auth";
+import NextAuth, { NextAuthConfig ,User, Session, } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
@@ -23,7 +23,7 @@ const authOptions: NextAuthConfig = {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials) {
+      async authorize(credentials): Promise<User | null> {
         
           const email = credentials.email as string | undefined;
           const password = credentials.password as string | undefined;
@@ -63,7 +63,7 @@ const authOptions: NextAuthConfig = {
   ],
 
   callbacks: {
-    async signIn({ user, account, profile }) {
+    async signIn({ user, account }):Promise<boolean> {
       try {
         // Connect to the database
         await prisma.$connect();
@@ -137,7 +137,7 @@ const authOptions: NextAuthConfig = {
         return false; // Deny sign-in on error
       }
     },
-    async session({ session, token }) {
+    async session({ session, token }):Promise<Session> {
       // Optionally include additional user data in the session
       if (session.user) {
         session.user.id = token.id as string;

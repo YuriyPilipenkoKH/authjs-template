@@ -17,7 +17,7 @@ const DashboardPage = async() => {
       <div>{session?.user?.image}</div>
      
       <LogoutButton username={session?.user?.name}/>
-      <RoleButton/>
+      <RoleButton email={session?.user?.email}/>
 
     </div>
   )
