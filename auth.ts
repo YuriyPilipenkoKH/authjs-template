@@ -4,6 +4,7 @@ import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
 import { prisma } from "./prisma/prisma";
 import { compare } from "bcrypt-ts";
+import { JWT } from "next-auth/jwt";
 
 export const BASE_PATH = "/api/auth";
 
@@ -145,11 +146,11 @@ const authOptions: NextAuthConfig = {
       }
       return session;
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user }: { token: JWT; user?: User }):Promise<JWT> {
       // Add user ID to the JWT token
       if (user) {
-        token.id = user.id;
-        token.role = user.role; // Add the role to the token
+        token.id = user.id as string;
+        token.role = user.role as string;
       }
       return token;
     },
